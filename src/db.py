@@ -13,11 +13,12 @@ def create_connection():
         db_user = os.getenv("DB_USER")
         db_password = os.getenv("DB_PASSWORD")
         db_host = os.getenv("DB_HOST")
+        db_port = os.getenv("DB_PORT")
         db_name = os.getenv("DB_NAME")
 
         # Create an engine instance
         engine = create_engine(
-            f"postgresql+psycopg2://{db_user}:{db_password}@{db_host}:5433/{db_name}"
+            f"postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{int(db_port)}/{db_name}"
         )
         print("Connection to PostgreSQL DB successful")
         return engine
