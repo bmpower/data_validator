@@ -1,25 +1,14 @@
-import os
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 import psycopg2
-from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
+from build_connection import build_connection_string
+
 
 def create_connection():
     try:
-        # Retrieve database credentials from environment variables
-        db_user = os.getenv("DB_USER")
-        db_password = os.getenv("DB_PASSWORD")
-        db_host = os.getenv("DB_HOST")
-        db_port = os.getenv("DB_PORT")
-        db_name = os.getenv("DB_NAME")
-
         # Create an engine instance
-        engine = create_engine(
-            f"postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{int(db_port)}/{db_name}"
-        )
+        engine = create_engine(build_connection_string())
         print("Connection to PostgreSQL DB successful")
         return engine
     except Exception as e:
